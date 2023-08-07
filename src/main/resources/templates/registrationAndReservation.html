@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration and Reservation</title>
+</head>
+<body>
+    <h1>Registration and Reservation</h1>
+
+    <form action="#" th:action="@{/register-and-reserve}" th:object="${userProfile}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" th:field="*{username}" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" required>
+        <br>
+        <button type="submit">Register and Reserve</button>
+    </form>
+
+    <form action="#" th:action="@{/register-and-reserve}" method="post">
+        <label for="customerName">Customer Name:</label>
+        <input type="text" id="customerName" name="customerName" required>
+        <br>
+        <label for="quantityOfCustomers">Quantity of Customers:</label>
+        <input type="number" id="quantityOfCustomers" name="quantityOfCustomers" required>
+        <br>
+        <label for="tableNumber">Table Number:</label>
+        <input type="number" id="tableNumber" name="tableNumber" required>
+        <br>
+        <label for="reservationDateTime">Reservation Date and Time:</label>
+        <input type="datetime-local" id="reservationDateTime" name="reservationDateTime" required>
+        <br>
+        <button type="submit">Reserve</button>
+    </form>
+</body>
+</html>
