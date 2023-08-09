@@ -2,7 +2,6 @@ package com.restaurantbooking.rest_reserv.controller;
 
 import com.restaurantbooking.rest_reserv.entity.UserProfile;
 import com.restaurantbooking.rest_reserv.service.UserProfileService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class UserProfileController {
         this.userProfileService = userProfileService;
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<UserProfile> createUserProfile(@RequestBody UserProfile userProfile) {
         UserProfile createdUserProfile = userProfileService.createUserProfile(userProfile);
         return new ResponseEntity<>(createdUserProfile, HttpStatus.CREATED);
