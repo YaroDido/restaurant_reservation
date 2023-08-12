@@ -1,14 +1,11 @@
 package com.restaurantbooking.rest_reserv.controller;
 
 import com.restaurantbooking.rest_reserv.entity.Reservation;
-import com.restaurantbooking.rest_reserv.entity.UserProfile;
 import com.restaurantbooking.rest_reserv.service.ReservationService;
 import com.restaurantbooking.rest_reserv.service.UserProfileService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,13 +21,6 @@ public class ReservationController {
     }
     @PostMapping("/")
     public ResponseEntity<Reservation> createReservation(@RequestBody Reservation reservation) {
-//        UserProfile userProfile = userProfileService.getUserProfileByUsername(reservation.getCustomerName());
-//
-//        if(userProfile == null){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//        reservation.setCustomerName(userProfile.getUsername());
-
         Reservation createdReservation = reservationService.createReservation(reservation);
         return new ResponseEntity<>(createdReservation, HttpStatus.CREATED);
 

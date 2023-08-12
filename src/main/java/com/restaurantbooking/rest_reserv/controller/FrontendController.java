@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @Controller
+@RequestMapping("/register-and-reserve")
 public class FrontendController {
     private final UserProfileService userProfileService;
     private final ReservationService reservationService;
@@ -23,14 +24,14 @@ public class FrontendController {
         this.userProfileService = userProfileService;
     }
 
-    @GetMapping("/register-and-reserve")
+    @GetMapping("/")
     public String registrationAndReservationForm(Model model) {
         model.addAttribute("userProfile", new UserProfile()); // Initialize an empty user profile object
         return "registrationAndReservation";
     }
 
-    @PostMapping("/register-and-reserve")
-    public String registerAndReserve(
+    @PostMapping("/submit-registration")
+    public String submitRegistration(
             @ModelAttribute("userProfile") UserProfile userProfile,
             @RequestParam("reservationDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationDateTime,
             @RequestParam("tableNumber") int tableNumber,
@@ -51,16 +52,4 @@ public class FrontendController {
     }
 
 }
-
-//    @GetMapping("/reservation")
-//    public String reservationFrom(Model model) {
-//        List<UserProfile> userProfiles = userProfileService.getAllUserProfiles();
-//        model.addAttribute("userProfiles", userProfiles);
-//        return "reservation";
-//    }
-//
-//    @GetMapping("/create-user-profile")
-//    public String createUserProfileFrom(Model model) {
-//        return "createUserProfile";
-//    }
 
