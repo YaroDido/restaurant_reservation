@@ -24,14 +24,40 @@ public class FrontendController {
         this.userProfileService = userProfileService;
     }
 
-    @GetMapping("/")
-    public String registrationAndReservationForm(Model model) {
-        model.addAttribute("userProfile", new UserProfile()); // Initialize an empty user profile object
-        return "registrationAndReservation";
+    @GetMapping("/registration")
+    public String registrationForm(Model model) {
+        model.addAttribute("userProfile", new UserProfile());
+        return "registration";
+    }
+
+    @GetMapping("/reservation")
+    public String reservationForm(Model model) {
+        model.addAttribute("reservation", new Reservation());
+        return "reservation";
+    }
+
+    @GetMapping("/successPage")
+    public String successPage() {
+        return "successPage";
     }
 
     @PostMapping("/submit-registration")
     public String submitRegistration(
+            @ModelAttribute("userProfile") UserProfile userProfile,
+            @RequestParam("username") String username,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password) {
+
+        userProfile.setUsername(username);
+        userProfile.setEmail(email);
+        userProfile.setPassword(password);
+
+        UserProfile savedUserProfile = userProfileService.createUserProfile(userProfile);
+        return "redirect:/register-and-reserve/reservation";
+    }
+
+    @PostMapping("/submit-reservation")
+    public String submitReservation(
             @ModelAttribute("userProfile") UserProfile userProfile,
             @RequestParam("reservationDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime reservationDateTime,
             @RequestParam("tableNumber") int tableNumber,
@@ -48,7 +74,7 @@ public class FrontendController {
         reservation.setQuantityOfCustomers(quantityOfCustomers);
         reservationService.createReservation(reservation);
 
-        return "successPage"; // A page indicating successful registration and reservation
+        return "redirect:/register-and-reserve/successPage";
     }
 
 }
