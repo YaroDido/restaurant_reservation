@@ -1,6 +1,7 @@
 package com.restaurantbooking.rest_reserv.service;
 
 import com.restaurantbooking.rest_reserv.entity.Reservation;
+import com.restaurantbooking.rest_reserv.entity.UserProfile;
 import com.restaurantbooking.rest_reserv.exception.TableUnavailableException;
 import com.restaurantbooking.rest_reserv.exception.NotFoundException;
 import com.restaurantbooking.rest_reserv.repository.ReservationRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationService {
@@ -23,6 +25,9 @@ public class ReservationService {
         if (!isTableAvailableForUpdate(reservation.getTableNumber(), reservation.getReservationDateTime(), reservation.getReservationDateTime(), reservation.getCustomerName())) {
             throw new TableUnavailableException("Table is not available for the specified date and time");
         }
+
+        reservation.setStatus("CREATED");
+
         return reservationRepository.save(reservation);
     }
     public Reservation updateReservation(Long reservationId, Reservation updatedReservation) {
@@ -41,6 +46,8 @@ public class ReservationService {
         existingReservation.setQuantityOfCustomers(updatedReservation.getQuantityOfCustomers());
         existingReservation.setTableNumber(updatedReservation.getTableNumber());
         existingReservation.setReservationDateTime(updatedReservation.getReservationDateTime());
+
+        existingReservation.setStatus("UPDATED");
 
         return reservationRepository.save(existingReservation);
 

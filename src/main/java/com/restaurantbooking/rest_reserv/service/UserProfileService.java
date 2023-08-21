@@ -26,6 +26,7 @@ public class UserProfileService {
         return userProfileRepository.findAll();
     }
 
+
     public Optional<UserProfile> getUserProfileById(Long id) {
         return userProfileRepository.findById(id);
     }
